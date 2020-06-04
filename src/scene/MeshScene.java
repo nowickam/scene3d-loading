@@ -4,6 +4,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import scene.models.Cuboid;
+import scene.models.Cylinder;
 import scene.models.Mesh;
 
 import java.util.ArrayList;
@@ -34,12 +35,18 @@ public class MeshScene {
         }
     }
 
+    private void transformCoordinates(Mesh m){
+        toGlobal(m.getV());
+        toCamera(m.getV());
+        toPerspective(m.getV());
+    }
+
     public void loadMeshes(){
-        Cuboid c = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
-        toGlobal(c.getV());
-        toCamera(c.getV());
-        toPerspective(c.getV());
-        meshes.add(c);
+//        Cuboid c = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
+//        meshes.add(c);
+
+        Cylinder c = new Cylinder(100,100,12, 150, -150, 0, 0, 0, 0);
+        addMesh(c);
     }
 
     public void toGlobal(ArrayList<Point3D> v){
@@ -74,6 +81,7 @@ public class MeshScene {
     }
 
     public void addMesh(Mesh mesh) {
+        transformCoordinates(mesh);
         meshes.add(mesh);
     }
 
