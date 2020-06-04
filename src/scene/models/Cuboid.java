@@ -2,18 +2,15 @@ package scene.models;
 
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
-import scene.Camera;
 import scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
 public class Cuboid extends Mesh{
     private double w, h, d;
-    private ArrayList<Point3D> v;
-    private ArrayList<Triangle> tr;
 
-    public Cuboid(double width, double height, Camera camera, double w, double h, double d){
-        super(width, height, camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ());
+    public Cuboid(double w, double h, double d, double px, double py, double pz, double rx, double ry, double rz){
+        super(px, py, pz, rx, ry, rz);
         this.w=w;
         this.h=h;
         this.d=d;
@@ -22,10 +19,10 @@ public class Cuboid extends Mesh{
         tr = new ArrayList<>();
 
         initVertices();
-        initTriangles();
     }
 
-    private void initVertices(){
+    @Override
+    protected void initVertices(){
         //upper base
         v.add(new Point3D(0,0,d));
         v.add(new Point3D(w,0,d));
@@ -38,14 +35,10 @@ public class Cuboid extends Mesh{
         v.add(new Point3D(w,h,0));
         v.add(new Point3D(0,h,0));
 
-        toGlobal(v);
-        toCamera(v);
-
-        toPerspective(v);
-
     }
 
-    private void initTriangles(){
+    @Override
+    protected void initTriangles(){
         //side triangles
         for(int i=0;i<4;i++){
             tr.add(new Triangle(v.get(i), v.get((i+1)%4), v.get((i+1)%4+4)));
@@ -65,6 +58,7 @@ public class Cuboid extends Mesh{
     @Override
     public void draw(GraphicsContext gc) {
         ArrayList<Point3D> points;
+        initTriangles();
         for(Triangle t : tr){
             gc.strokeLine(t.getV1().getX(), t.getV1().getY(), t.getV2().getX(),t.getV2().getY());
             gc.strokeLine(t.getV2().getX(), t.getV2().getY(), t.getV3().getX(),t.getV3().getY());

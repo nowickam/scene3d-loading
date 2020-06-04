@@ -3,52 +3,28 @@ package scene.models;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
+import scene.primitives.Triangle;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Mesh {
-    private final Affine global, camera, perspective;
     private Affine rotateX, rotateY, rotateZ, translate;
-    private int alpha;
+    protected ArrayList<Point3D> v;
+    protected ArrayList<Triangle> tr;
+    protected double px, py, pz, rx, ry, rz;
 
-    public Mesh(double w, double h, double cx, double cy, double cz){
-        alpha=45;
-        global = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,w/2);
-        camera = new Affine(1,0,0,cx,0,1,0,cy,0,0,1,cz);
-        perspective = new Affine(-w/2/Math.tan(Math.toRadians(alpha)),0,w/2,0,
-                                0, w/2/Math.tan(Math.toRadians(alpha)),h/2,0,
-                                0,0,0,1);
+
+    public Mesh(double px, double py, double pz, double rx, double ry, double rz){
+        this.px = px;
+        this.py = py;
+        this.pz = pz;
+        this.rx = rx;
+        this.ry = ry;
+        this.rz = rz;
     }
 
-    public void toGlobal(ArrayList<Point3D> v){
-        Point3D result = null;
-        for(int i=0;i<v.size();i++){
-            result = global.transform(v.get(i));
-            v.set(i,result);
-        }
-    }
 
-    public void toCamera(ArrayList<Point3D> v){
-        Point3D result = null;
-        for(int i=0;i<v.size();i++){
-            result = camera.transform(v.get(i));
-            v.set(i,result);
-        }
-    }
-
-    public void toPerspective(ArrayList<Point3D> v){
-        Point3D result = null, point = null;
-        double z = 0;
-        for(int i=0;i<v.size();i++){
-            z = v.get(i).getZ();
-            result = perspective.transform(v.get(i));
-            result = new Point3D(result.getX()/z, result.getY()/z, result.getZ()/z);
-            v.set(i,result);
-        }
-    }
-
-    public void rotateX(double alpha, ArrayList<Point3D> v) {
+    public void rotateX(double alpha) {
         double alphaRad = Math.toRadians(alpha);
         Point3D result = null;
         rotateX = new Affine(1,0,0,0,
@@ -94,6 +70,18 @@ public abstract class Mesh {
             v.set(i,result);
         }
     }
+
+    public ArrayList<Point3D> getV() {
+        return v;
+    }
+
+    public void setV(ArrayList<Point3D> v) {
+        this.v = new ArrayList<Point3D>(v);
+    }
+
+    protected abstract void initVertices();
+
+    protected abstract void initTriangles();
 
     public abstract void draw(GraphicsContext gc);
 }
