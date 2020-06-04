@@ -3,6 +3,7 @@ package scene;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
+import scene.models.Cone;
 import scene.models.Cuboid;
 import scene.models.Cylinder;
 import scene.models.Mesh;
@@ -42,11 +43,14 @@ public class MeshScene {
     }
 
     public void loadMeshes(){
-//        Cuboid c = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
+//        Cuboid m = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
 //        meshes.add(c);
 
-        Cylinder c = new Cylinder(100,100,12, 150, -150, 0, 0, 0, 0);
-        addMesh(c);
+//        Cylinder m = new Cylinder(100,100,12, 150, -150, 0, 0, 0, 0);
+//        addMesh(c);
+
+        Cone m = new Cone(100,100,50, 100, -150, 0, 0, 0, 0);
+        addMesh(m);
     }
 
     public void toGlobal(ArrayList<Point3D> v){
