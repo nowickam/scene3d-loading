@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import scene.models.Cuboid;
 
 public class Main extends Application {
@@ -22,14 +23,14 @@ public class Main extends Application {
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
         //width = (int)screenSize.getMaxX();
         //height = (int)screenSize.getMaxY()-20;
-        width=600;
-        height=450;
+        width=1000;
+        height=800;
 
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc= canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         MeshScene scene = new MeshScene(width, height);
-        loadMeshes(scene);
+        scene.loadMeshes();
         scene.draw(gc);
 
         primaryStage.setTitle("Scene3D");
@@ -38,10 +39,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void loadMeshes(MeshScene scene){
-        Cuboid c = new Cuboid(width, height, 100,100,100);
-        scene.addMesh(c);
-    }
 
 
     public static void main(String[] args) {

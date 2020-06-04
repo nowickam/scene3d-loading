@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MeshScene {
     private ArrayList<Mesh> meshes;
     private Camera camera;
-    private int width, height;
+    private double width, height;
 
     public MeshScene(int width, int height){
         this.height=height;
@@ -22,6 +22,11 @@ public class MeshScene {
         for (Mesh m:meshes) {
             m.draw(gc);
         }
+    }
+
+    public void loadMeshes(){
+        Cuboid c = new Cuboid(width, height, camera, 100,100,100);
+        meshes.add(c);
     }
 
     public ArrayList<Mesh> getMeshes() {
