@@ -35,7 +35,7 @@ public class MeshScene {
     }
 
     public void loadMeshes(){
-        Cuboid c = new Cuboid(width, height, camera, 100,100,100);
+        Cuboid c = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
         toGlobal(c.getV());
         toCamera(c.getV());
         toPerspective(c.getV());

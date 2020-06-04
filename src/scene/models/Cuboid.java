@@ -35,6 +35,7 @@ public class Cuboid extends Mesh{
         v.add(new Point3D(w,h,0));
         v.add(new Point3D(0,h,0));
 
+        transform();
     }
 
     @Override

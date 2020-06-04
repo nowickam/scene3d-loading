@@ -23,8 +23,15 @@ public abstract class Mesh {
         this.rz = rz;
     }
 
+    protected void transform(){
+        translate(px, py, pz);
+        rotateX(rx);
+        rotateY(ry);
+        rotateZ(rz);
+    }
 
-    public void rotateX(double alpha) {
+
+    private void rotateX(double alpha) {
         double alphaRad = Math.toRadians(alpha);
         Point3D result = null;
         rotateX = new Affine(1,0,0,0,
@@ -36,7 +43,7 @@ public abstract class Mesh {
         }
     }
 
-    public void rotateY(double alpha, ArrayList<Point3D> v) {
+    private void rotateY(double alpha) {
         double alphaRad = Math.toRadians(alpha);
         Point3D result = null;
         rotateY = new Affine(Math.cos(alphaRad),0,Math.sin(alphaRad),0,
@@ -48,7 +55,7 @@ public abstract class Mesh {
         }
     }
 
-    public void rotateZ(double alpha, ArrayList<Point3D> v) {
+    private void rotateZ(double alpha) {
         double alphaRad = Math.toRadians(alpha);
         Point3D result = null;
         rotateZ = new Affine(Math.cos(alphaRad),-Math.sin(alphaRad),0,0,
@@ -60,7 +67,7 @@ public abstract class Mesh {
         }
     }
 
-    public void translate(ArrayList<Point3D> v, double tx, double ty, double tz) {
+    private void translate(double tx, double ty, double tz) {
         Point3D result = null;
         translate = new Affine(1,0,0,tx,
                 0,1, 0,ty,
