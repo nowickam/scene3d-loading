@@ -53,6 +53,7 @@ public class Main extends Application {
             File file = loadFile.showOpenDialog(primaryStage);
             if (file != null) {
                 try {
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     scene.loadMeshes(file);
                     scene.draw(gc);
                 } catch (Exception ex) {
@@ -81,9 +82,19 @@ public class Main extends Application {
             }
         });
 
+        Button resetButton = new Button("Reset");
+        resetButton.setStyle(buttonStyle);
+        resetButton.setLayoutX(10);
+        resetButton.setLayoutY(90);
+        resetButton.setOnAction(e -> {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        });
+
+
         root.getChildren().add(canvas);
         root.getChildren().add(loadButton);
         root.getChildren().add(saveButton);
+        root.getChildren().add(resetButton);
 
 
         primaryStage.setTitle("Scene3D");

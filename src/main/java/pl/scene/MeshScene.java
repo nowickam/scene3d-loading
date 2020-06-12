@@ -61,6 +61,7 @@ public class MeshScene {
 //
 //        Sphere s = new Sphere(100,10,5, 100, -100, 0, 0, 0, 0);
 //        addMesh(s);
+        clearMeshes();
         ObjectMapper mapper = new ObjectMapper();
         Scanner reader = new Scanner(file);
         String mString[];
@@ -115,8 +116,9 @@ public class MeshScene {
         }
     }
 
-    public ArrayList<Mesh> getMeshes() {
-        return meshes;
+    public void clearMeshes() {
+        meshes = new ArrayList<>();
+
     }
 
     public void addMesh(Mesh mesh) {
