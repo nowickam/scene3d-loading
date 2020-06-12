@@ -1,17 +1,20 @@
-package scene;
+package pl.scene;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import scene.models.Cone;
-import scene.models.Cuboid;
-import scene.models.Cylinder;
-import scene.models.Mesh;
+import pl.scene.models.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MeshScene {
-    private final Affine toGlobal, toCamera, toPerspective;
+    private final Affine toGlobal, toPerspective;
+    private Affine toCamera;
     private ArrayList<Mesh> meshes;
     private Camera camera;
     private double width, height;
@@ -36,21 +39,53 @@ public class MeshScene {
         }
     }
 
+//    public void moveCamera(){
+//        toCamera = new Affine(1,0,0,camera.getPosition().getX(),0,1,0,camera.getPosition().getY(),0,0,1,camera.getPosition().getZ());
+//        for(Mesh m : meshes){
+//            transformCoordinates(m);
+//        }
+//    }
+
     private void transformCoordinates(Mesh m){
-        toGlobal(m.getV());
-        toCamera(m.getV());
-        toPerspective(m.getV());
+        toGlobal(m.getGlobalV());
+        toCamera(m.getGlobalV());
+        toPerspective(m.getGlobalV());
     }
 
-    public void loadMeshes(){
-//        Cuboid m = new Cuboid(100,100,100, 150, -150, 0, 0, 0, 0);
-//        meshes.add(c);
+    public void loadMeshes(File file) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+//        Cuboid cub = new Cuboid(100,100,100, -125, -120, 0, 0, 0, 0);
+//        addMesh(cub);
+//
+//        Cylinder cyl = new Cylinder(100,100,12, -150, 120, 0, 0, 0, 0);
+//        addMesh(cyl);
+//
+//        Sphere s = new Sphere(100,10,5, 100, -100, 0, 0, 0, 0);
+//        addMesh(s);
+        ObjectMapper mapper = new ObjectMapper();
+        Scanner reader = new Scanner(file);
+        String mString[];
+        while(reader.hasNextLine()){
+            mString = reader.nextLine().split(" ");
+            Class c = Class.forName(mString[0]);
+            Mesh m = (Mesh) mapper.readValue(mString[1], Class.forName(mString[0]));
+            addMesh(m);
+        }
 
-//        Cylinder m = new Cylinder(100,100,12, 150, -150, 0, 0, 0, 0);
-//        addMesh(c);
+    }
 
-        Cone m = new Cone(100,100,50, 100, -150, 0, 0, 0, 0);
-        addMesh(m);
+    public void saveMeshes(PrintWriter writer) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String s = mapper.writeValueAsString(meshes.get(0));
+        Cuboid c = mapper.readValue(s, Cuboid.class);
+        String s2 = mapper.writeValueAsString(c);
+        System.out.println(s);
+        System.out.println(s2);
+
+        String mString;
+        for(Mesh m : meshes){
+            mString = mapper.writeValueAsString(m);
+            writer.println(m.getClass().getCanonicalName()+" "+mString);
+        }
     }
 
     public void toGlobal(ArrayList<Point3D> v){

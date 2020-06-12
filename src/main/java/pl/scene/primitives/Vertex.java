@@ -1,4 +1,4 @@
-package scene.primitives;
+package pl.scene.primitives;
 
 public class Vertex {
     private int x,y,z,f;

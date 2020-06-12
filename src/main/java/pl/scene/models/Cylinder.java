@@ -1,8 +1,9 @@
-package scene.models;
+package pl.scene.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
-import scene.primitives.Triangle;
+import pl.scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,9 @@ public class Cylinder extends Mesh{
     private double r, h;
     private int n;
 
-    public Cylinder(double r, double h, int n, double px, double py, double pz, double rx, double ry, double rz){
+    public Cylinder(@JsonProperty("r") double r, @JsonProperty("h") double h, @JsonProperty("n") int n,
+                    @JsonProperty("px") double px, @JsonProperty("py")double py, @JsonProperty("pz")double pz,
+                    @JsonProperty("rx")double rx, @JsonProperty("ry")double ry, @JsonProperty("rz")double rz){
         super(px, py, pz, rx, ry, rz);
         this.r=r;
         this.h=h;
@@ -38,6 +41,7 @@ public class Cylinder extends Mesh{
             v.add(new Point3D(r*Math.cos(2*Math.PI*i/ n), 0, r*Math.sin(2*Math.PI*i/n)));
         }
 
+        globalV = new ArrayList<>(v);
         transform();
     }
 
@@ -46,25 +50,25 @@ public class Cylinder extends Mesh{
         //side triangles
         int i=1;
         for(;i<n;i++){
-            tr.add(new Triangle(v.get(i), v.get(i+1), v.get(i+2+n)));
-            tr.add(new Triangle( v.get((i+2)+n-1), v.get(i+2+n), v.get(i+1)));
+            tr.add(new Triangle(globalV.get(i), globalV.get(i+1), globalV.get(i+2+n)));
+            tr.add(new Triangle( globalV.get((i+2)+n-1), globalV.get(i+2+n), globalV.get(i+1)));
         }
-        tr.add(new Triangle(v.get(i), v.get(1), v.get(n+2)));
-        tr.add(new Triangle(v.get(n+3), v.get(n+2),v.get(1)));
+        tr.add(new Triangle(globalV.get(i), globalV.get(1), globalV.get(n+2)));
+        tr.add(new Triangle(globalV.get(n+3), globalV.get(n+2), globalV.get(1)));
 
         //upper triangles
         i=1;
         for(;i<n;i++){
-            tr.add(new Triangle(v.get(0), v.get(i), v.get(i+1)));
+            tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
         }
-        tr.add(new Triangle(v.get(0), v.get(i), v.get(1)));
+        tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(1)));
 
         //lower triangles
         i=n+2;
         for(;i<=2*n;i++){
-            tr.add(new Triangle(v.get(n+1), v.get(i), v.get(i+1)));
+            tr.add(new Triangle(globalV.get(n+1), globalV.get(i), globalV.get(i+1)));
         }
-        tr.add(new Triangle(v.get(n+1), v.get(i), v.get(n+2)));
+        tr.add(new Triangle(globalV.get(n+1), globalV.get(i), globalV.get(n+2)));
     }
 
     @Override

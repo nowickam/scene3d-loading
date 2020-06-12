@@ -1,8 +1,9 @@
-package scene.models;
+package pl.scene.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
-import scene.primitives.Triangle;
+import pl.scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,10 @@ public class Cone extends Mesh{
     private double r, h;
     private int n;
 
-    public Cone(double r, double h, int n, double px, double py, double pz, double rx, double ry, double rz){
+
+    public Cone(@JsonProperty("r") double r, @JsonProperty("h") double h, @JsonProperty("n") int n,
+                @JsonProperty("px") double px, @JsonProperty("py")double py, @JsonProperty("pz")double pz,
+                @JsonProperty("rx")double rx, @JsonProperty("ry")double ry, @JsonProperty("rz")double rz){
         super(px, py, pz, rx, ry, rz);
         this.r=r;
         this.h=h;
@@ -35,6 +39,7 @@ public class Cone extends Mesh{
             v.add(new Point3D(r*Math.cos(2*Math.PI*i/ n), 0, r*Math.sin(2*Math.PI*i/n)));
         }
 
+        globalV = new ArrayList<>(v);
         transform();
     }
 
@@ -43,16 +48,16 @@ public class Cone extends Mesh{
         //side triangles
         int i=2;
         for(;i<=n;i++){
-            tr.add(new Triangle(v.get(0), v.get(i), v.get(i+1)));
+            tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
         }
-        tr.add(new Triangle(v.get(0), v.get(2), v.get(n+1)));
+        tr.add(new Triangle(globalV.get(0), globalV.get(2), globalV.get(n+1)));
 
         //lower triangles
         i=2;
         for(;i<n;i++){
-            tr.add(new Triangle(v.get(i), v.get(i+1), v.get(1)));
+            tr.add(new Triangle(globalV.get(i), globalV.get(i+1), globalV.get(1)));
         }
-        tr.add(new Triangle(v.get(2), v.get(n), v.get(1)));
+        tr.add(new Triangle(globalV.get(2), globalV.get(n), globalV.get(1)));
 
     }
 

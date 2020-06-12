@@ -1,16 +1,23 @@
-package scene.models;
+package pl.scene.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
-import scene.primitives.Triangle;
+import pl.scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
 public class Cuboid extends Mesh{
     private double w, h, d;
 
-    public Cuboid(double w, double h, double d, double px, double py, double pz, double rx, double ry, double rz){
+
+    @JsonCreator
+    public Cuboid(@JsonProperty("w") double w, @JsonProperty("h") double h,@JsonProperty("d") double d,
+                  @JsonProperty("px") double px, @JsonProperty("py")double py, @JsonProperty("pz")double pz,
+                  @JsonProperty("rx")double rx, @JsonProperty("ry")double ry, @JsonProperty("rz")double rz){
         super(px, py, pz, rx, ry, rz);
+
         this.w=w;
         this.h=h;
         this.d=d;
@@ -20,6 +27,7 @@ public class Cuboid extends Mesh{
 
         initVertices();
     }
+
 
     @Override
     protected void initVertices(){
@@ -35,6 +43,7 @@ public class Cuboid extends Mesh{
         v.add(new Point3D(w,h,0));
         v.add(new Point3D(0,h,0));
 
+        globalV = new ArrayList<>(v);
         transform();
     }
 
@@ -42,17 +51,17 @@ public class Cuboid extends Mesh{
     protected void initTriangles(){
         //side triangles
         for(int i=0;i<4;i++){
-            tr.add(new Triangle(v.get(i), v.get((i+1)%4), v.get((i+1)%4+4)));
-            tr.add(new Triangle(v.get(i),  v.get((i+1)+3), v.get((i+1)%4+4)));
+            tr.add(new Triangle(globalV.get(i), globalV.get((i+1)%4), globalV.get((i+1)%4+4)));
+            tr.add(new Triangle(globalV.get(i),  globalV.get((i+1)+3), globalV.get((i+1)%4+4)));
         }
 
         //upper triangles
-        tr.add(new Triangle(v.get(0), v.get(1), v.get(2)));
-        tr.add(new Triangle(v.get(0), v.get(3), v.get(2)));
+        tr.add(new Triangle(globalV.get(0), globalV.get(1), globalV.get(2)));
+        tr.add(new Triangle(globalV.get(0), globalV.get(3), globalV.get(2)));
 
         //lower triangles
-        tr.add(new Triangle(v.get(4), v.get(5), v.get(6)));
-        tr.add(new Triangle(v.get(4), v.get(7), v.get(6)));
+        tr.add(new Triangle(globalV.get(4), globalV.get(5), globalV.get(6)));
+        tr.add(new Triangle(globalV.get(4), globalV.get(7), globalV.get(6)));
 
     }
 

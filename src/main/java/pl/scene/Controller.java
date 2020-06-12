@@ -1,4 +1,4 @@
-package scene;
+package pl.scene;
 
 public class Controller {
 }

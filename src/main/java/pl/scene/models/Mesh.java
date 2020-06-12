@@ -1,15 +1,18 @@
-package scene.models;
+package pl.scene.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import scene.primitives.Triangle;
+import pl.scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(value = {"globalV", "tr", "rotateX", "rotateY", "rotateZ", "translate"})
 public abstract class Mesh {
     private Affine rotateX, rotateY, rotateZ, translate;
     protected ArrayList<Point3D> v;
+    protected ArrayList<Point3D> globalV;
     protected ArrayList<Triangle> tr;
     protected double px, py, pz, rx, ry, rz;
 
@@ -37,9 +40,9 @@ public abstract class Mesh {
         rotateX = new Affine(1,0,0,0,
                 0,Math.cos(alphaRad), -Math.sin(alphaRad),0,
                 0, Math.sin(alphaRad),Math.cos(alphaRad),0);
-        for(int i=0;i<v.size();i++){
-            result = rotateX.transform(v.get(i));
-            v.set(i,result);
+        for(int i = 0; i< globalV.size(); i++){
+            result = rotateX.transform(globalV.get(i));
+            globalV.set(i,result);
         }
     }
 
@@ -49,9 +52,9 @@ public abstract class Mesh {
         rotateY = new Affine(Math.cos(alphaRad),0,Math.sin(alphaRad),0,
                 0,1, 0,0,
                 -Math.sin(alphaRad), 0,Math.cos(alphaRad),0);
-        for(int i=0;i<v.size();i++){
-            result = rotateY.transform(v.get(i));
-            v.set(i,result);
+        for(int i = 0; i< globalV.size(); i++){
+            result = rotateY.transform(globalV.get(i));
+            globalV.set(i,result);
         }
     }
 
@@ -61,9 +64,9 @@ public abstract class Mesh {
         rotateZ = new Affine(Math.cos(alphaRad),-Math.sin(alphaRad),0,0,
                 Math.sin(alphaRad),Math.cos(alphaRad), 0,0,
                 0, 0, 1,0);
-        for(int i=0;i<v.size();i++){
-            result = rotateZ.transform(v.get(i));
-            v.set(i,result);
+        for(int i = 0; i< globalV.size(); i++){
+            result = rotateZ.transform(globalV.get(i));
+            globalV.set(i,result);
         }
     }
 
@@ -72,18 +75,18 @@ public abstract class Mesh {
         translate = new Affine(1,0,0,tx,
                 0,1, 0,ty,
                 0, 0,1,tz);
-        for(int i=0;i<v.size();i++){
-            result = translate.transform(v.get(i));
-            v.set(i,result);
+        for(int i = 0; i< globalV.size(); i++){
+            result = translate.transform(globalV.get(i));
+            globalV.set(i,result);
         }
     }
 
-    public ArrayList<Point3D> getV() {
-        return v;
+    public ArrayList<Point3D> getGlobalV() {
+        return globalV;
     }
 
-    public void setV(ArrayList<Point3D> v) {
-        this.v = new ArrayList<Point3D>(v);
+    public void setGlobalV(ArrayList<Point3D> v) {
+        this.globalV = new ArrayList<Point3D>(v);
     }
 
     protected abstract void initVertices();

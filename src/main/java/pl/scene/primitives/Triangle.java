@@ -1,4 +1,4 @@
-package scene.primitives;
+package pl.scene.primitives;
 
 import javafx.geometry.Point3D;
 
