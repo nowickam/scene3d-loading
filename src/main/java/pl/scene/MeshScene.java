@@ -42,6 +42,7 @@ public class MeshScene {
 //    public void moveCamera(){
 //        toCamera = new Affine(1,0,0,camera.getPosition().getX(),0,1,0,camera.getPosition().getY(),0,0,1,camera.getPosition().getZ());
 //        for(Mesh m : meshes){
+//            m.setGlobalV(m.getV());
 //            transformCoordinates(m);
 //        }
 //    }

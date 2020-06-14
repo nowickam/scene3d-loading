@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 public class Main extends Application {
     private int width, height;
     private final String buttonStyle =
-                    "-fx-font-size: 15; " +
+            "-fx-font-size: 15; " +
                     "-fx-min-height: 20; " +
                     "-fx-min-width: 150; " +
                     "-fx-background-color: #ffffff; " +
