@@ -1,1 +1,4 @@
-pl.scene.models.Cuboid {"px":-125.0,"py":-120.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"w":100.0,"h":100.0,"d":100.0}
+pl.scene.models.Sphere {"px":100.0,"py":-100.0,"pz":-800.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":100.0,"m":20,"n":20}
+pl.scene.models.Sphere {"px":100.0,"py":-100.0,"pz":-400.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":100.0,"m":20,"n":20}
+pl.scene.models.Sphere {"px":100.0,"py":-100.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":100.0,"m":20,"n":20}
+pl.scene.models.Sphere {"px":100.0,"py":-100.0,"pz":400.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":100.0,"m":20,"n":20}

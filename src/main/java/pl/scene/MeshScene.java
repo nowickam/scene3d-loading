@@ -54,14 +54,13 @@ public class MeshScene {
     }
 
     public void loadMeshes(File file) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-//        Cuboid cub = new Cuboid(100,100,100, -125, -120, 0, 0, 0, 0);
-//        addMesh(cub);
-//
-//        Cylinder cyl = new Cylinder(100,100,12, -150, 120, 0, 0, 0, 0);
-//        addMesh(cyl);
-//
-//        Sphere s = new Sphere(100,10,5, 100, -100, 0, 0, 0, 0);
+//        Sphere s = new Sphere(100,10,5, 100, -100, -500, 0, 0, 0);
 //        addMesh(s);
+//        s = new Sphere(100,10,5, 100, -100, 0, 0, 0, 0);
+//        addMesh(s);
+//        s = new Sphere(100,10,5, 100, -100, 400, 0, 0, 0);
+//        addMesh(s);
+
         clearMeshes();
         ObjectMapper mapper = new ObjectMapper();
         Scanner reader = new Scanner(file);

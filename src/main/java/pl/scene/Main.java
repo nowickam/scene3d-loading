@@ -1,6 +1,7 @@
 package pl.scene;
 
 import javafx.application.Application;
+import javafx.geometry.Point3D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -40,8 +41,10 @@ public class Main extends Application {
         GraphicsContext gc= canvas.getGraphicsContext2D();
         Camera camera = new Camera(width, height);
         MeshScene scene = new MeshScene(width, height);
-        //pl.scene.loadMeshes(null);
         scene.setCamera(camera);
+
+//        scene.loadMeshes(null);
+//        scene.draw(gc);
 
         FileChooser loadFile = new FileChooser();
         loadFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("3D Files", "*.3d"));
