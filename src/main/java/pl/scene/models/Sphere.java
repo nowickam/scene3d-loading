@@ -46,16 +46,16 @@ public class Sphere extends Mesh{
     @Override
     protected void initTriangles(){
         //upper lid
-        for(int i=2;i<m;i++){
+        for(int i=2;i<=m;i++){
             tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(0), globalV.get(m), globalV.get(2)));
+        tr.add(new Triangle(globalV.get(0), globalV.get(m+1), globalV.get(2)));
 
         //lower lid
-        for(int i=2;i<m;i++){
+        for(int i=2;i<=m;i++){
             tr.add(new Triangle(globalV.get(1), globalV.get((n-1)*m+i), globalV.get((n-1)*m+i+1)));
         }
-        tr.add(new Triangle(globalV.get(1), globalV.get((n-1)*m+m), globalV.get((n-1)*m+2)));
+        tr.add(new Triangle(globalV.get(1), globalV.get((n-1)*m+m+1), globalV.get((n-1)*m+2)));
 
         for(int i=0;i<n-1;i++){
             for(int j=1;j<m;j++){
