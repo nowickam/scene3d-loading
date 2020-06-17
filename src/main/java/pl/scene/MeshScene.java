@@ -29,7 +29,7 @@ public class MeshScene {
         meshes = new ArrayList<>();
         camera = new Camera(width, height);
 
-        double alpha=45;
+        double alpha=40;
         toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
         toCamera = camera.getCameraMatrix();
         toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,

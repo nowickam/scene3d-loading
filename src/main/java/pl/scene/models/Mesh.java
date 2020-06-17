@@ -27,10 +27,10 @@ public abstract class Mesh {
     }
 
     protected void transform(){
-        translate(px, py, pz);
         rotateX(rx);
         rotateY(ry);
         rotateZ(rz);
+        translate(px, py, pz);
     }
 
 

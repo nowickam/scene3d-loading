@@ -42,17 +42,17 @@ public class Main extends Application {
         logger.info("start");
 
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
-        //width = (int)screenSize.getMaxX();
-        //height = (int)screenSize.getMaxY()-20;
-        width=1000;
-        height=800;
+        width = (int)screenSize.getMaxX();
+        height = (int)screenSize.getMaxY()-20;
+//        width=1000;
+//        height=800;
 
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc= canvas.getGraphicsContext2D();
         Camera camera = new Camera(width, height);
         MeshScene scene = new MeshScene(width, height);
         scene.setCamera(camera);
-//
+
 //        canvas.setOnKeyPressed(keyEvent -> {
 //            logger.info(keyEvent.getCode().toString());
 //            if(keyEvent.getCode() == KeyCode.DOWN){
@@ -67,11 +67,12 @@ public class Main extends Application {
 //            else if(keyEvent.getCode() == KeyCode.RIGHT){
 //                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
 //            }
-//
 //            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 //            scene.moveCamera();
 //            scene.draw(gc);
+//
 //        });
+
 
 //        scene.loadMeshes(null);
 //        scene.draw(gc);
@@ -145,7 +146,7 @@ public class Main extends Application {
         primaryStage.setTitle("Scene3D");
         Scene myScene = new Scene(root, Color.WHITE);
         primaryStage.setScene(myScene);
-        //primaryStage.setMaximized(true);
+        primaryStage.setMaximized(true);
         primaryStage.show();
         canvas.requestFocus();
     }
