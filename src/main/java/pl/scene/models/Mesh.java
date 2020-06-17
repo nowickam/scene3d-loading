@@ -8,7 +8,7 @@ import pl.scene.primitives.Triangle;
 
 import java.util.ArrayList;
 
-@JsonIgnoreProperties(value = {"globalV", "tr", "rotateX", "rotateY", "rotateZ", "translate"})
+@JsonIgnoreProperties(value = {"globalV", "tr", "rotateX", "rotateY", "rotateZ", "translate", "v"})
 public abstract class Mesh {
     private Affine rotateX, rotateY, rotateZ, translate;
     protected ArrayList<Point3D> v;
@@ -85,8 +85,13 @@ public abstract class Mesh {
         return globalV;
     }
 
+    public ArrayList<Point3D> getV() {
+        return v;
+    }
+
     public void setGlobalV(ArrayList<Point3D> v) {
         this.globalV = new ArrayList<Point3D>(v);
+        transform();
     }
 
     protected abstract void initVertices();

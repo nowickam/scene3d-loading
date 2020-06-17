@@ -8,17 +8,26 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Main extends Application {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     private int width, height;
     private final String buttonStyle =
             "-fx-font-size: 15; " +
@@ -30,6 +39,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Group root = new Group();
+        logger.info("start");
 
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
         //width = (int)screenSize.getMaxX();
@@ -42,11 +52,41 @@ public class Main extends Application {
         Camera camera = new Camera(width, height);
         MeshScene scene = new MeshScene(width, height);
         scene.setCamera(camera);
+//
+//        canvas.setOnKeyPressed(keyEvent -> {
+//            logger.info(keyEvent.getCode().toString());
+//            if(keyEvent.getCode() == KeyCode.DOWN){
+//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.UP){
+//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.LEFT){
+//                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.RIGHT){
+//                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+//            }
+//
+//            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//            scene.moveCamera();
+//            scene.draw(gc);
+//        });
 
 //        scene.loadMeshes(null);
 //        scene.draw(gc);
 
         FileChooser loadFile = new FileChooser();
+        Path path;
+        path = Paths.get("./examples").toAbsolutePath().normalize();
+        if(Files.notExists(path))
+        {
+            path = Paths.get(".").toAbsolutePath().normalize();
+        }
+
+        loadFile.setInitialDirectory(new File(path.toString()));
+        logger.info(loadFile.getInitialDirectory().toString());
+
         loadFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("3D Files", "*.3d"));
         Button loadButton = new Button("Load (*.3d)");
         loadButton.setStyle(buttonStyle);
@@ -59,6 +99,7 @@ public class Main extends Application {
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     scene.loadMeshes(file);
                     scene.draw(gc);
+                    canvas.requestFocus();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -79,6 +120,7 @@ public class Main extends Application {
                     writer = new PrintWriter(file);
                     scene.saveMeshes(writer);
                     writer.close();
+                    canvas.requestFocus();
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -91,8 +133,8 @@ public class Main extends Application {
         resetButton.setLayoutY(90);
         resetButton.setOnAction(e -> {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            canvas.requestFocus();
         });
-
 
         root.getChildren().add(canvas);
         root.getChildren().add(loadButton);
@@ -102,27 +144,10 @@ public class Main extends Application {
 
         primaryStage.setTitle("Scene3D");
         Scene myScene = new Scene(root, Color.WHITE);
-//        myScene.setOnKeyPressed(keyEvent -> {
-//            System.out.println(keyEvent.getCode());
-//            if(keyEvent.getCode() == KeyCode.ENTER){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.UP){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.LEFT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.RIGHT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            pl.scene.moveCamera();
-//            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            pl.scene.draw(gc);
-//        });
         primaryStage.setScene(myScene);
         //primaryStage.setMaximized(true);
         primaryStage.show();
+        canvas.requestFocus();
     }
 
 

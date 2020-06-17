@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.scene.models.*;
 
 import java.io.File;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MeshScene {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     private final Affine toGlobal, toPerspective;
     private Affine toCamera;
     private ArrayList<Mesh> meshes;
@@ -27,7 +31,7 @@ public class MeshScene {
 
         double alpha=45;
         toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
-        toCamera = new Affine(1,0,0,camera.getPosition().getX(),0,1,0,camera.getPosition().getY(),0,0,1,camera.getPosition().getZ());
+        toCamera = camera.getCameraMatrix();
         toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,
                 0, width/2/Math.tan(Math.toRadians(alpha)),height/2,0,
                 0,0,0,1);
@@ -39,13 +43,13 @@ public class MeshScene {
         }
     }
 
-//    public void moveCamera(){
-//        toCamera = new Affine(1,0,0,camera.getPosition().getX(),0,1,0,camera.getPosition().getY(),0,0,1,camera.getPosition().getZ());
-//        for(Mesh m : meshes){
-//            m.setGlobalV(m.getV());
-//            transformCoordinates(m);
-//        }
-//    }
+    public void moveCamera(){
+        toCamera = camera.getCameraMatrix();
+        for(Mesh m : meshes){
+            m.setGlobalV(m.getV());
+            transformCoordinates(m);
+        }
+    }
 
     private void transformCoordinates(Mesh m){
         toGlobal(m.getGlobalV());
