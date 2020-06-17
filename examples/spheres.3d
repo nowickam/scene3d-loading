@@ -1,0 +1,4 @@
+pl.scene.models.Sphere {"px":600.0,"py":150.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":150.0,"m":4,"n":4}
+pl.scene.models.Sphere {"px":-600.0,"py":150.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":150.0,"m":20,"n":20}
+pl.scene.models.Sphere {"px":-200.0,"py":150.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":150.0,"m":10,"n":10}
+pl.scene.models.Sphere {"px":200.0,"py":150.0,"pz":0.0,"rx":0.0,"ry":0.0,"rz":0.0,"r":150.0,"m":5,"n":5}
