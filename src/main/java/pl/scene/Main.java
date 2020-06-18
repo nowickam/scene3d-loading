@@ -39,7 +39,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Group root = new Group();
-        logger.info("start");
+        logger.info("START");
 
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
         width = (int)screenSize.getMaxX();
@@ -52,28 +52,10 @@ public class Main extends Application {
         MeshScene scene = new MeshScene(width, height);
         scene.setCamera(camera);
 
-////      ** UNCOMMENT FOR NEW SCENE**
-//        scene.loadMeshesLocal();
-//        scene.draw(gc);
+//      ** UNCOMMENT FOR NEW SCENE**
+        scene.loadMeshesLocal();
+        scene.draw(gc);
 
-        canvas.setOnKeyPressed(keyEvent -> {
-            logger.info(keyEvent.getCode().toString());
-            if(keyEvent.getCode() == KeyCode.DOWN){
-                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
-            }
-            else if(keyEvent.getCode() == KeyCode.UP){
-                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
-            }
-            else if(keyEvent.getCode() == KeyCode.LEFT){
-                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
-            }
-            else if(keyEvent.getCode() == KeyCode.RIGHT){
-                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
-            }
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            scene.moveCamera();
-            scene.draw(gc);
-        });
 
         FileChooser loadFile = new FileChooser();
         Path path;
@@ -84,7 +66,6 @@ public class Main extends Application {
         }
 
         loadFile.setInitialDirectory(new File(path.toString()));
-        logger.info(loadFile.getInitialDirectory().toString());
 
         loadFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("3D Files", "*.3d"));
         Button loadButton = new Button("Load (*.3d)");
@@ -99,6 +80,7 @@ public class Main extends Application {
                     scene.loadMeshes(file);
                     scene.draw(gc);
                     canvas.requestFocus();
+                    logger.info("LOADED");
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -120,6 +102,7 @@ public class Main extends Application {
                     scene.saveMeshes(writer);
                     writer.close();
                     canvas.requestFocus();
+                    logger.info("SAVED");
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -135,6 +118,26 @@ public class Main extends Application {
             canvas.requestFocus();
         });
 
+////      ** CAMERA MOVEMENT **
+//        canvas.setOnKeyPressed(keyEvent -> {
+//            logger.info(keyEvent.getCode().toString());
+//            if(keyEvent.getCode() == KeyCode.DOWN){
+//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.UP){
+//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.LEFT){
+//                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+//            }
+//            else if(keyEvent.getCode() == KeyCode.RIGHT){
+//                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
+//            }
+//            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//            scene.moveCamera();
+//            scene.draw(gc);
+//        });
+
         root.getChildren().add(canvas);
         root.getChildren().add(loadButton);
         root.getChildren().add(saveButton);
@@ -148,8 +151,6 @@ public class Main extends Application {
         primaryStage.show();
         canvas.requestFocus();
     }
-
-
 
     public static void main(String[] args) {
         launch(args);

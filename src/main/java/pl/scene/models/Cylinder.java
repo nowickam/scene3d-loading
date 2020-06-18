@@ -82,4 +82,28 @@ public class Cylinder extends Mesh{
             //gc.strokeLine(t.getV3().getX(), t.getV3().getY(), t.getV1().getX(),t.getV1().getY());
         }
     }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    public double getR() {
+        return r;
+    }
+
+    public void setR(double r) {
+        this.r = r;
+    }
 }

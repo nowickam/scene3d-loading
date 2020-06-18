@@ -99,4 +99,52 @@ public abstract class Mesh {
     protected abstract void initTriangles();
 
     public abstract void draw(GraphicsContext gc);
+
+    public double getPy() {
+        return py;
+    }
+
+    public void setPy(double py) {
+        this.py = py;
+    }
+
+    public double getPx() {
+        return px;
+    }
+
+    public void setPx(double px) {
+        this.px = px;
+    }
+
+    public double getPz() {
+        return pz;
+    }
+
+    public void setPz(double pz) {
+        this.pz = pz;
+    }
+
+    public double getRz() {
+        return rz;
+    }
+
+    public void setRz(double rz) {
+        this.rz = rz;
+    }
+
+    public double getRy() {
+        return ry;
+    }
+
+    public void setRy(double ry) {
+        this.ry = ry;
+    }
+
+    public double getRx() {
+        return rx;
+    }
+
+    public void setRx(double rx) {
+        this.rx = rx;
+    }
 }

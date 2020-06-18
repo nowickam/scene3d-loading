@@ -8,6 +8,7 @@ public class Camera {
 
     private Point3D position, target, up;
     private Point3D cx, cy, cz;
+    private double alpha;
 
     public Camera(double width, double height){
         //neutral camera
@@ -16,6 +17,7 @@ public class Camera {
         //vector
         up = new Point3D(0,1,0);
         calculate();
+        alpha = 38;
     }
 
     private void calculate(){
@@ -67,5 +69,9 @@ public class Camera {
 
     public void setUp(Point3D up) {
         this.up = up;
+    }
+
+    public double getAlpha() {
+        return alpha;
     }
 }

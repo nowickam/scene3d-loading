@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.scene.models.*;
 
 import java.io.File;
@@ -15,23 +13,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MeshScene {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
     private final Affine toGlobal, toPerspective;
     private Affine toCamera;
     private ArrayList<Mesh> meshes;
     private Camera camera;
-    private double width, height;
 
     public MeshScene(int width, int height){
-        this.height=height;
-        this.width=width;
         meshes = new ArrayList<>();
         camera = new Camera(width, height);
 
-        double alpha=30;
         toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
         toCamera = camera.getCameraMatrix();
+        double alpha=camera.getAlpha();
         toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,
                 0, width/2/Math.tan(Math.toRadians(alpha)),height/2,0,
                 0,0,0,1);
@@ -87,11 +80,12 @@ public class MeshScene {
 
     public void saveMeshes(PrintWriter writer) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String s = mapper.writeValueAsString(meshes.get(0));
-        Cuboid c = mapper.readValue(s, Cuboid.class);
-        String s2 = mapper.writeValueAsString(c);
-        System.out.println(s);
-        System.out.println(s2);
+//        Mesh cb = new Cylinder(10,10,10,10,10,10,10,10,10);
+//        String s = mapper.writeValueAsString(cb);
+//        Cuboid c = mapper.readValue(s, Cuboid.class);
+//        String s2 = mapper.writeValueAsString(c);
+//        System.out.println(s);
+//        System.out.println(s2);
 
         String mString;
         for(Mesh m : meshes){
@@ -117,7 +111,7 @@ public class MeshScene {
     }
 
     public void toPerspective(ArrayList<Point3D> v){
-        Point3D result = null, point = null;
+        Point3D result = null;
         double z = 0;
         for(int i=0;i<v.size();i++){
             z = v.get(i).getZ();
