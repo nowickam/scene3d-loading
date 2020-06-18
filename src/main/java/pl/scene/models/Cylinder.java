@@ -47,6 +47,7 @@ public class Cylinder extends Mesh{
 
     @Override
     protected void initTriangles(){
+        tr.clear();
         //side triangles
         int i=1;
         for(;i<n;i++){

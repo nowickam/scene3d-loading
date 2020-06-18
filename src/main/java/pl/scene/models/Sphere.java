@@ -45,6 +45,7 @@ public class Sphere extends Mesh{
 
     @Override
     protected void initTriangles(){
+        tr.clear();
         //upper lid
         for(int i=2;i<=m;i++){
             tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));

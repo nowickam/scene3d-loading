@@ -44,8 +44,7 @@ public class Main extends Application {
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
         width = (int)screenSize.getMaxX();
         height = (int)screenSize.getMaxY()-20;
-//        width=1000;
-//        height=800;
+
 
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc= canvas.getGraphicsContext2D();
@@ -53,29 +52,28 @@ public class Main extends Application {
         MeshScene scene = new MeshScene(width, height);
         scene.setCamera(camera);
 
-//        canvas.setOnKeyPressed(keyEvent -> {
-//            logger.info(keyEvent.getCode().toString());
-//            if(keyEvent.getCode() == KeyCode.DOWN){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.UP){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.LEFT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.RIGHT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            scene.moveCamera();
-//            scene.draw(gc);
-//
-//        });
-
-
-//        scene.loadMeshes(null);
+////      ** UNCOMMENT FOR NEW SCENE**
+//        scene.loadMeshesLocal();
 //        scene.draw(gc);
+
+        canvas.setOnKeyPressed(keyEvent -> {
+            logger.info(keyEvent.getCode().toString());
+            if(keyEvent.getCode() == KeyCode.DOWN){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.UP){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.LEFT){
+                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.RIGHT){
+                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
+            }
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            scene.moveCamera();
+            scene.draw(gc);
+        });
 
         FileChooser loadFile = new FileChooser();
         Path path;

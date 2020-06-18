@@ -49,6 +49,7 @@ public class Cuboid extends Mesh{
 
     @Override
     protected void initTriangles(){
+        tr.clear();
         //side triangles
         for(int i=0;i<4;i++){
             tr.add(new Triangle(globalV.get(i), globalV.get((i+1)%4), globalV.get((i+1)%4+4)));

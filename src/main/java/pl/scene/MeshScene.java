@@ -29,7 +29,7 @@ public class MeshScene {
         meshes = new ArrayList<>();
         camera = new Camera(width, height);
 
-        double alpha=40;
+        double alpha=30;
         toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
         toCamera = camera.getCameraMatrix();
         toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,
@@ -57,14 +57,21 @@ public class MeshScene {
         toPerspective(m.getGlobalV());
     }
 
-    public void loadMeshes(File file) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-//        Sphere s = new Sphere(100,10,5, 100, -100, -500, 0, 0, 0);
-//        addMesh(s);
-//        s = new Sphere(100,10,5, 100, -100, 0, 0, 0, 0);
-//        addMesh(s);
-//        s = new Sphere(100,10,5, 100, -100, 400, 0, 0, 0);
-//        addMesh(s);
+    public void loadMeshesLocal(){
+        clearMeshes();
+        Mesh m = new Sphere(300,20,20, 700, 200, -500, 0, 0, 0);
+        addMesh(m);
+        m = new Sphere(100,20,20, -300, 200, -500, 0, 0, 0);
+        addMesh(m);
+        m = new Cuboid(100,200,100, -200, -200, 0, 0, 0, 60);
+        addMesh(m);
+        m = new Cylinder(100,150,50, -400, 200, 400, 0, 0, 0);
+        addMesh(m);
+        m = new Cone(100,150,50, 100, 0, 0, 0, 0, -30);
+        addMesh(m);
+    }
 
+    public void loadMeshes(File file) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         clearMeshes();
         ObjectMapper mapper = new ObjectMapper();
         Scanner reader = new Scanner(file);

@@ -45,6 +45,7 @@ public class Cone extends Mesh{
 
     @Override
     protected void initTriangles(){
+        tr.clear();
         //side triangles
         int i=2;
         for(;i<=n;i++){
