@@ -16,15 +16,15 @@ public class Camera {
         target = new Point3D(0,0,height/5);
         //vector
         up = new Point3D(0,1,0);
-        calculate();
+        //calculate();
         alpha = 38;
     }
 
-    private void calculate(){
+    private void calculate(Point3D globalPosition){
         Point3D nom;
         double den;
 
-        nom = position.subtract(target);
+        nom = globalPosition.subtract(target);
         den = nom.magnitude();
         if(den!=0)den=1/den;
         cz = nom.multiply(den);
@@ -40,7 +40,9 @@ public class Camera {
         cy = nom.multiply(den);
     }
 
-    public Affine getCameraMatrix(){
+    public Affine getCameraMatrix(Affine toGlobal){
+        Point3D globalPosition = toGlobal.transform(position);
+        calculate(globalPosition);
         Affine toCamera = new Affine(1,0,0,cx.dotProduct(position),0,1,0,cy.dotProduct(position),0,0,1,cz.dotProduct(position));
         return toCamera;
     }
@@ -52,7 +54,7 @@ public class Camera {
 
     public void setPosition(Point3D position) {
         this.position = position;
-        calculate();
+        //calculate();
     }
 
     public Point3D getTarget() {

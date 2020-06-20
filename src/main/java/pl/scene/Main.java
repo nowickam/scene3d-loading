@@ -119,24 +119,24 @@ public class Main extends Application {
         });
 
 ////      ** CAMERA MOVEMENT **
-//        canvas.setOnKeyPressed(keyEvent -> {
-//            logger.info(keyEvent.getCode().toString());
-//            if(keyEvent.getCode() == KeyCode.DOWN){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.UP){
-//                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.LEFT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            else if(keyEvent.getCode() == KeyCode.RIGHT){
-//                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
-//            }
-//            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            scene.moveCamera();
-//            scene.draw(gc);
-//        });
+        canvas.setOnKeyPressed(keyEvent -> {
+            logger.info(keyEvent.getCode().toString());
+            if(keyEvent.getCode() == KeyCode.DOWN){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.UP){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.LEFT){
+                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.RIGHT){
+                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+            }
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            scene.moveCamera();
+            scene.draw(gc);
+        });
 
         root.getChildren().add(canvas);
         root.getChildren().add(loadButton);

@@ -23,7 +23,7 @@ public class MeshScene {
         camera = new Camera(width, height);
 
         toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
-        toCamera = camera.getCameraMatrix();
+        toCamera = camera.getCameraMatrix(toGlobal);
         double alpha=camera.getAlpha();
         toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,
                 0, width/2/Math.tan(Math.toRadians(alpha)),height/2,0,
@@ -37,7 +37,7 @@ public class MeshScene {
     }
 
     public void moveCamera(){
-        toCamera = camera.getCameraMatrix();
+        toCamera = camera.getCameraMatrix(toGlobal);
         for(Mesh m : meshes){
             m.setGlobalV(m.getV());
             transformCoordinates(m);
