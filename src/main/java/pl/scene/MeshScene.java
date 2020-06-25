@@ -62,7 +62,7 @@ public class MeshScene {
         addMesh(m);
         m = new Cuboid(100,200,100, -200, -200, 0, 0, 0, 60);
         addMesh(m);
-        m = new Cylinder(100,150,50, -400, 200, 400, 0, 0, 0);
+        m = new Cylinder(100,150,50, -300, 200, 400, 0, 0, 0);
         addMesh(m);
         m = new Cone(100,150,50, 100, 0, 0, 0, 0, -30);
         addMesh(m);
@@ -84,12 +84,6 @@ public class MeshScene {
 
     public void saveMeshes(PrintWriter writer) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-//        Mesh cb = new Cylinder(10,10,10,10,10,10,10,10,10);
-//        String s = mapper.writeValueAsString(cb);
-//        Cuboid c = mapper.readValue(s, Cuboid.class);
-//        String s2 = mapper.writeValueAsString(c);
-//        System.out.println(s);
-//        System.out.println(s2);
 
         String mString;
         for(Mesh m : meshes){

@@ -115,6 +115,8 @@ public class Main extends Application {
         resetButton.setLayoutY(90);
         resetButton.setOnAction(e -> {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            camera.setPosition(new Point3D(0, height/5, 0));
+            scene.moveCamera();
             canvas.requestFocus();
         });
 
@@ -132,6 +134,12 @@ public class Main extends Application {
             }
             else if(keyEvent.getCode() == KeyCode.RIGHT){
                 camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.ENTER){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()-10));
+            }
+            else if(keyEvent.getCode() == KeyCode.BACK_SPACE){
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()+10));
             }
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             scene.moveCamera();

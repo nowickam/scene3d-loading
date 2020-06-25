@@ -43,7 +43,7 @@ public class Triangle {
         double top = height;
         double bottom = 0;
 
-        double front = (double) 1 / 100;
+        double front = (double) 1 / 50;
         double back = (double) 1 / (height * width);
 
         tE[0] = 0;
