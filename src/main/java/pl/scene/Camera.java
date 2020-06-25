@@ -16,8 +16,7 @@ public class Camera {
         target = new Point3D(0,0,height/5);
         //vector
         up = new Point3D(0,1,0);
-        //calculate();
-        alpha = 38;
+        alpha = 45;
     }
 
     private void calculate(Point3D globalPosition){
@@ -54,7 +53,6 @@ public class Camera {
 
     public void setPosition(Point3D position) {
         this.position = position;
-        //calculate();
     }
 
     public Point3D getTarget() {

@@ -17,8 +17,11 @@ public class MeshScene {
     private Affine toCamera;
     private ArrayList<Mesh> meshes;
     private Camera camera;
+    private int width, height;
 
-    public MeshScene(int width, int height){
+    public MeshScene(int w, int h){
+        width=w;
+        height=h;
         meshes = new ArrayList<>();
         camera = new Camera(width, height);
 
@@ -32,7 +35,7 @@ public class MeshScene {
 
     public void draw(GraphicsContext gc){
         for (Mesh m:meshes) {
-            m.draw(gc);
+            m.draw(gc, width, height);
         }
     }
 
@@ -52,6 +55,7 @@ public class MeshScene {
 
     public void loadMeshesLocal(){
         clearMeshes();
+
         Mesh m = new Sphere(300,20,20, 700, 200, -500, 0, 0, 0);
         addMesh(m);
         m = new Sphere(100,20,20, -300, 200, -500, 0, 0, 0);

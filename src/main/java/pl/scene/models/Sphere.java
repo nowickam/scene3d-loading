@@ -69,15 +69,17 @@ public class Sphere extends Mesh{
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc, int width, int height) {
         ArrayList<Point3D> points;
         initTriangles();
         int i=0;
         for(Triangle t : tr){
-            if(i<2*m)
-                gc.strokeLine(t.getV1().getX(), t.getV1().getY(), t.getV2().getX(),t.getV2().getY());
-            gc.strokeLine(t.getV2().getX(), t.getV2().getY(), t.getV3().getX(),t.getV3().getY());
-            //gc.strokeLine(t.getV3().getX(), t.getV3().getY(), t.getV1().getX(),t.getV1().getY());
+            t.clip(width, height);
+            if(i<2*m && t.getEdgeP1(0) != null && t.getEdgeP2(0) != null)
+                gc.strokeLine(t.getEdgeP1(0).getX(), t.getEdgeP1(0).getY(), t.getEdgeP2(0).getX(), t.getEdgeP2(0).getY());
+            if(t.getEdgeP1(1) != null && t.getEdgeP2(1) != null)
+                gc.strokeLine(t.getEdgeP1(1).getX(), t.getEdgeP1(1).getY(), t.getEdgeP2(1).getX(), t.getEdgeP2(1).getY());
+
             i++;
         }
     }

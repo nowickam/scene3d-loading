@@ -98,7 +98,7 @@ public abstract class Mesh {
 
     protected abstract void initTriangles();
 
-    public abstract void draw(GraphicsContext gc);
+    public abstract void draw(GraphicsContext gc, int width, int height);
 
     public double getPy() {
         return py;
