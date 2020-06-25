@@ -8,4 +8,11 @@ To create a new scene, uncomment loadMeshesLocal() and scene.draw(gc) in /src/ma
 
 The scene examples are located in the /examples directory.
 
-To run enter: mvn clean javafx:run.
+To run: mvn clean javafx:run
+
+Usage:
+
+- Load to load a .3d scene
+- Save to save the scene in .3d extension
+- Reset to clear the canvas and reset the camera position
+- Use the arrows, enter and backspace to steer the camera
