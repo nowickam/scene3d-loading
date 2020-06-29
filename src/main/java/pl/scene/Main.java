@@ -116,7 +116,8 @@ public class Main extends Application {
         resetButton.setLayoutY(90);
         resetButton.setOnAction(e -> {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            camera.setPosition(new Point3D(0, height/5, 0));
+            camera.setPosition(new Point3D(0, -height/3, 0));
+            camera.setTarget(new Point3D(0,0,height));
             scene.moveCamera();
             canvas.requestFocus();
         });
@@ -131,10 +132,10 @@ public class Main extends Application {
                 camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.LEFT){
-                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
+                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.RIGHT){
-                camera.setPosition(new Point3D(camera.getPosition().getX()+10, camera.getPosition().getY(), camera.getPosition().getZ()));
+                camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.ENTER){
                 camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()-10));
@@ -144,10 +145,10 @@ public class Main extends Application {
             }
             // camera rotation
             else if(keyEvent.getCode() == KeyCode.A){
-                camera.setTarget(new Point3D(camera.getTarget().getX()-10, camera.getTarget().getY(), camera.getTarget().getZ()));
+                camera.setTarget(new Point3D(camera.getTarget().getX()+10, camera.getTarget().getY(), camera.getTarget().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.D){
-                camera.setTarget(new Point3D(camera.getTarget().getX()+10, camera.getTarget().getY(), camera.getTarget().getZ()));
+                camera.setTarget(new Point3D(camera.getTarget().getX()-10, camera.getTarget().getY(), camera.getTarget().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.W){
                 camera.setTarget(new Point3D(camera.getTarget().getX(), camera.getTarget().getY()-10, camera.getTarget().getZ()));

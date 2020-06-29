@@ -13,7 +13,7 @@ public class Camera {
 
     public Camera(double width, double height){
         //neutral camera
-        position = new Point3D(0, height/5, 0);
+        position = new Point3D(0, -height/3, 0);
         target = new Point3D(0,0,height);
         //vector
         up = new Point3D(0,1,0);
@@ -31,7 +31,7 @@ public class Camera {
     public Affine getCameraMatrix(){
         calculate();
 
-        Affine toCamera = new Affine(cx.getX(), cx.getY(), cx.getZ(), position.getX(),
+        Affine toCamera = new Affine(-cx.getX(), -cx.getY(), -cx.getZ(), -position.getX(),
                                      cy.getX(), cy.getY(), cy.getZ(), -position.getY(),
                                      -cz.getX(), -cz.getY(), -cz.getZ(), -position.getZ());
         return toCamera;
