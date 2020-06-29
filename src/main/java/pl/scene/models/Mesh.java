@@ -9,7 +9,7 @@ import pl.scene.matrices.Matrices;
 
 import java.util.ArrayList;
 
-@JsonIgnoreProperties(value = {"globalV", "tr", "rotateX", "rotateY", "rotateZ", "translate", "v"})
+@JsonIgnoreProperties(value = {"tr", "rotateX", "rotateY", "rotateZ", "translate", "v", "transformedV"})
 public abstract class Mesh {
     private Affine rotateX, rotateY, rotateZ, translate;
     protected ArrayList<Point3D> v;
