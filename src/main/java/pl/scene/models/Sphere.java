@@ -39,7 +39,7 @@ public class Sphere extends Mesh{
             }
         }
 
-        globalV = new ArrayList<>(v);
+        transformedV = new ArrayList<>(v);
         transform();
     }
 
@@ -48,23 +48,23 @@ public class Sphere extends Mesh{
         tr.clear();
         //upper lid
         for(int i=2;i<=m;i++){
-            tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
+            tr.add(new Triangle(transformedV.get(0), transformedV.get(i), transformedV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(0), globalV.get(m+1), globalV.get(2)));
+        tr.add(new Triangle(transformedV.get(0), transformedV.get(m+1), transformedV.get(2)));
 
         //lower lid
         for(int i=2;i<=m;i++){
-            tr.add(new Triangle(globalV.get(1), globalV.get((n-1)*m+i), globalV.get((n-1)*m+i+1)));
+            tr.add(new Triangle(transformedV.get(1), transformedV.get((n-1)*m+i), transformedV.get((n-1)*m+i+1)));
         }
-        tr.add(new Triangle(globalV.get(1), globalV.get((n-1)*m+m+1), globalV.get((n-1)*m+2)));
+        tr.add(new Triangle(transformedV.get(1), transformedV.get((n-1)*m+m+1), transformedV.get((n-1)*m+2)));
 
         for(int i=0;i<n-1;i++){
             for(int j=1;j<m;j++){
-                tr.add(new Triangle(globalV.get(i*m+j+1), globalV.get(i*m+j+2), globalV.get((i+1)*m+j+2)));
-                tr.add(new Triangle(globalV.get(i*m+j+1), globalV.get((i+1)*m+j+2), globalV.get((i+1)*m+j+1)));
+                tr.add(new Triangle(transformedV.get(i*m+j+1), transformedV.get(i*m+j+2), transformedV.get((i+1)*m+j+2)));
+                tr.add(new Triangle(transformedV.get(i*m+j+1), transformedV.get((i+1)*m+j+2), transformedV.get((i+1)*m+j+1)));
             }
-            tr.add(new Triangle(globalV.get((i+1)*m+1), globalV.get(i*m+2), globalV.get((i+1)*m+2)));
-            tr.add(new Triangle(globalV.get((i+1)*m+1), globalV.get((i+1)*m+2), globalV.get((i+2)*m+1)));
+            tr.add(new Triangle(transformedV.get((i+1)*m+1), transformedV.get(i*m+2), transformedV.get((i+1)*m+2)));
+            tr.add(new Triangle(transformedV.get((i+1)*m+1), transformedV.get((i+1)*m+2), transformedV.get((i+2)*m+1)));
         }
     }
 

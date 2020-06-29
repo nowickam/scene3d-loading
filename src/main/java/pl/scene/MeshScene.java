@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
+import pl.scene.matrices.Matrices;
 import pl.scene.models.*;
 
 import java.io.File;
@@ -25,12 +26,10 @@ public class MeshScene {
         meshes = new ArrayList<>();
         camera = new Camera(width, height);
 
-        toGlobal = new Affine(-1,0,0,0,0,-1,0,0,0,0,-1,width/2);
-        toCamera = camera.getCameraMatrix(toGlobal);
+        toGlobal = Matrices.getGlobal();
+        toCamera = camera.getCameraMatrix();
         double alpha=camera.getAlpha();
-        toPerspective = new Affine(-width/2/Math.tan(Math.toRadians(alpha)),0,width/2,0,
-                0, width/2/Math.tan(Math.toRadians(alpha)),height/2,0,
-                0,0,0,1);
+        toPerspective = Matrices.getPerspective(width, height, alpha);
     }
 
     public void draw(GraphicsContext gc){
@@ -40,23 +39,23 @@ public class MeshScene {
     }
 
     public void moveCamera(){
-        toCamera = camera.getCameraMatrix(toGlobal);
+        toCamera = camera.getCameraMatrix();
         for(Mesh m : meshes){
-            m.setGlobalV(m.getV());
+            m.setTransformedV(m.getV());
             transformCoordinates(m);
         }
     }
 
     private void transformCoordinates(Mesh m){
-        toGlobal(m.getGlobalV());
-        toCamera(m.getGlobalV());
-        toPerspective(m.getGlobalV());
+        Matrices.apply(toGlobal, m.getTransformedV());
+        Matrices.apply(toCamera, m.getTransformedV());
+        Matrices.applyAndNormalize(toPerspective, m.getTransformedV());
     }
 
     public void loadMeshesLocal(){
         clearMeshes();
 
-        Mesh m = new Sphere(300,20,20, 700, 200, -500, 0, 0, 0);
+        Mesh m = new Sphere(200,20,20, 700, 200, -500, 0, 0, 0);
         addMesh(m);
         m = new Sphere(100,20,20, -300, 200, -500, 0, 0, 0);
         addMesh(m);
@@ -89,33 +88,6 @@ public class MeshScene {
         for(Mesh m : meshes){
             mString = mapper.writeValueAsString(m);
             writer.println(m.getClass().getCanonicalName()+" "+mString);
-        }
-    }
-
-    public void toGlobal(ArrayList<Point3D> v){
-        Point3D result = null;
-        for(int i=0;i<v.size();i++){
-            result = toGlobal.transform(v.get(i));
-            v.set(i,result);
-        }
-    }
-
-    public void toCamera(ArrayList<Point3D> v){
-        Point3D result = null;
-        for(int i=0;i<v.size();i++){
-            result = toCamera.transform(v.get(i));
-            v.set(i,result);
-        }
-    }
-
-    public void toPerspective(ArrayList<Point3D> v){
-        Point3D result = null;
-        double z = 0;
-        for(int i=0;i<v.size();i++){
-            z = v.get(i).getZ();
-            result = toPerspective.transform(v.get(i));
-            result = new Point3D(result.getX()/z, result.getY()/z, result.getZ()/z);
-            v.set(i,result);
         }
     }
 

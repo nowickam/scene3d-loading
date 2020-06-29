@@ -41,7 +41,7 @@ public class Cylinder extends Mesh{
             v.add(new Point3D(r*Math.cos(2*Math.PI*i/ n), 0, r*Math.sin(2*Math.PI*i/n)));
         }
 
-        globalV = new ArrayList<>(v);
+        transformedV = new ArrayList<>(v);
         transform();
     }
 
@@ -51,25 +51,25 @@ public class Cylinder extends Mesh{
         //side triangles
         int i=1;
         for(;i<n;i++){
-            tr.add(new Triangle(globalV.get(i), globalV.get(i+1), globalV.get(i+2+n)));
-            tr.add(new Triangle( globalV.get((i+2)+n-1), globalV.get(i+2+n), globalV.get(i+1)));
+            tr.add(new Triangle(transformedV.get(i), transformedV.get(i+1), transformedV.get(i+2+n)));
+            tr.add(new Triangle( transformedV.get((i+2)+n-1), transformedV.get(i+2+n), transformedV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(i), globalV.get(1), globalV.get(n+2)));
-        tr.add(new Triangle(globalV.get(n+3), globalV.get(n+2), globalV.get(1)));
+        tr.add(new Triangle(transformedV.get(i), transformedV.get(1), transformedV.get(n+2)));
+        tr.add(new Triangle(transformedV.get(n+3), transformedV.get(n+2), transformedV.get(1)));
 
         //upper triangles
         i=1;
         for(;i<n;i++){
-            tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
+            tr.add(new Triangle(transformedV.get(0), transformedV.get(i), transformedV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(1)));
+        tr.add(new Triangle(transformedV.get(0), transformedV.get(i), transformedV.get(1)));
 
         //lower triangles
         i=n+2;
         for(;i<=2*n;i++){
-            tr.add(new Triangle(globalV.get(n+1), globalV.get(i), globalV.get(i+1)));
+            tr.add(new Triangle(transformedV.get(n+1), transformedV.get(i), transformedV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(n+1), globalV.get(i), globalV.get(n+2)));
+        tr.add(new Triangle(transformedV.get(n+1), transformedV.get(i), transformedV.get(n+2)));
     }
 
     @Override

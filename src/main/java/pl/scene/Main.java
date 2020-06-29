@@ -15,6 +15,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.scene.matrices.Matrices;
 
 
 import java.io.File;
@@ -122,12 +123,12 @@ public class Main extends Application {
 
 ////      ** CAMERA MOVEMENT **
         canvas.setOnKeyPressed(keyEvent -> {
-            logger.info(keyEvent.getCode().toString());
+            // camera movement
             if(keyEvent.getCode() == KeyCode.DOWN){
-                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.UP){
-                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()+10, camera.getPosition().getZ()));
+                camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY()-10, camera.getPosition().getZ()));
             }
             else if(keyEvent.getCode() == KeyCode.LEFT){
                 camera.setPosition(new Point3D(camera.getPosition().getX()-10, camera.getPosition().getY(), camera.getPosition().getZ()));
@@ -140,6 +141,19 @@ public class Main extends Application {
             }
             else if(keyEvent.getCode() == KeyCode.BACK_SPACE){
                 camera.setPosition(new Point3D(camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()+10));
+            }
+            // camera rotation
+            else if(keyEvent.getCode() == KeyCode.A){
+                camera.setTarget(new Point3D(camera.getTarget().getX()-10, camera.getTarget().getY(), camera.getTarget().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.D){
+                camera.setTarget(new Point3D(camera.getTarget().getX()+10, camera.getTarget().getY(), camera.getTarget().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.W){
+                camera.setTarget(new Point3D(camera.getTarget().getX(), camera.getTarget().getY()-10, camera.getTarget().getZ()));
+            }
+            else if(keyEvent.getCode() == KeyCode.S){
+                camera.setTarget(new Point3D(camera.getTarget().getX(), camera.getTarget().getY()+10, camera.getTarget().getZ()));
             }
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             scene.moveCamera();

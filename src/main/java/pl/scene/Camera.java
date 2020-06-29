@@ -2,6 +2,7 @@ package pl.scene;
 
 import javafx.geometry.Point3D;
 import javafx.scene.transform.Affine;
+import pl.scene.matrices.Matrices;
 
 
 public class Camera {
@@ -13,36 +14,26 @@ public class Camera {
     public Camera(double width, double height){
         //neutral camera
         position = new Point3D(0, height/5, 0);
-        target = new Point3D(0,0,height/5);
+        target = new Point3D(0,0,height);
         //vector
         up = new Point3D(0,1,0);
         alpha = 45;
     }
 
-    private void calculate(Point3D globalPosition){
-        Point3D nom;
-        double den;
+    private void calculate(){
+        cz = (position.subtract(target)).normalize();
 
-        nom = globalPosition.subtract(target);
-        den = nom.magnitude();
-        if(den!=0)den=1/den;
-        cz = nom.multiply(den);
+        cx = (up.crossProduct(cz)).normalize();
 
-        nom = up.crossProduct(cz);
-        den = nom.magnitude();
-        if(den!=0)den=1/den;
-        cx = nom.multiply(den);
-
-        nom = cz.crossProduct(cx);
-        den = nom.magnitude();
-        if(den!=0)den=1/den;
-        cy = nom.multiply(den);
+        cy = (cz.crossProduct(cx)).normalize();
     }
 
-    public Affine getCameraMatrix(Affine toGlobal){
-        Point3D globalPosition = toGlobal.transform(position);
-        calculate(globalPosition);
-        Affine toCamera = new Affine(1,0,0,cx.dotProduct(position),0,1,0,cy.dotProduct(position),0,0,1,cz.dotProduct(position));
+    public Affine getCameraMatrix(){
+        calculate();
+
+        Affine toCamera = new Affine(cx.getX(), cx.getY(), cx.getZ(), position.getX(),
+                                     cy.getX(), cy.getY(), cy.getZ(), -position.getY(),
+                                     -cz.getX(), -cz.getY(), -cz.getZ(), -position.getZ());
         return toCamera;
     }
 

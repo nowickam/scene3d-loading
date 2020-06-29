@@ -39,7 +39,7 @@ public class Cone extends Mesh{
             v.add(new Point3D(r*Math.cos(2*Math.PI*i/ n), 0, r*Math.sin(2*Math.PI*i/n)));
         }
 
-        globalV = new ArrayList<>(v);
+        transformedV = new ArrayList<>(v);
         transform();
     }
 
@@ -49,16 +49,16 @@ public class Cone extends Mesh{
         //side triangles
         int i=2;
         for(;i<=n;i++){
-            tr.add(new Triangle(globalV.get(0), globalV.get(i), globalV.get(i+1)));
+            tr.add(new Triangle(transformedV.get(0), transformedV.get(i), transformedV.get(i+1)));
         }
-        tr.add(new Triangle(globalV.get(0), globalV.get(2), globalV.get(n+1)));
+        tr.add(new Triangle(transformedV.get(0), transformedV.get(2), transformedV.get(n+1)));
 
         //lower triangles
         i=2;
         for(;i<n;i++){
-            tr.add(new Triangle(globalV.get(i), globalV.get(i+1), globalV.get(1)));
+            tr.add(new Triangle(transformedV.get(i), transformedV.get(i+1), transformedV.get(1)));
         }
-        tr.add(new Triangle(globalV.get(2), globalV.get(n), globalV.get(1)));
+        tr.add(new Triangle(transformedV.get(2), transformedV.get(n), transformedV.get(1)));
 
     }
 

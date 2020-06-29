@@ -5,6 +5,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import pl.scene.primitives.Triangle;
+import pl.scene.matrices.Matrices;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public abstract class Mesh {
     private Affine rotateX, rotateY, rotateZ, translate;
     protected ArrayList<Point3D> v;
-    protected ArrayList<Point3D> globalV;
+    protected ArrayList<Point3D> transformedV;
     protected ArrayList<Triangle> tr;
     protected double px, py, pz, rx, ry, rz;
 
@@ -35,62 +36,35 @@ public abstract class Mesh {
 
 
     private void rotateX(double alpha) {
-        double alphaRad = Math.toRadians(alpha);
-        Point3D result = null;
-        rotateX = new Affine(1,0,0,0,
-                0,Math.cos(alphaRad), -Math.sin(alphaRad),0,
-                0, Math.sin(alphaRad),Math.cos(alphaRad),0);
-        for(int i = 0; i< globalV.size(); i++){
-            result = rotateX.transform(globalV.get(i));
-            globalV.set(i,result);
-        }
+        rotateX = Matrices.getRotationX(alpha);
+        Matrices.apply(rotateX, transformedV);
     }
 
     private void rotateY(double alpha) {
-        double alphaRad = Math.toRadians(alpha);
-        Point3D result = null;
-        rotateY = new Affine(Math.cos(alphaRad),0,Math.sin(alphaRad),0,
-                0,1, 0,0,
-                -Math.sin(alphaRad), 0,Math.cos(alphaRad),0);
-        for(int i = 0; i< globalV.size(); i++){
-            result = rotateY.transform(globalV.get(i));
-            globalV.set(i,result);
-        }
+        rotateY = Matrices.getRotationY(alpha);
+        Matrices.apply(rotateY, transformedV);
     }
 
     private void rotateZ(double alpha) {
-        double alphaRad = Math.toRadians(alpha);
-        Point3D result = null;
-        rotateZ = new Affine(Math.cos(alphaRad),-Math.sin(alphaRad),0,0,
-                Math.sin(alphaRad),Math.cos(alphaRad), 0,0,
-                0, 0, 1,0);
-        for(int i = 0; i< globalV.size(); i++){
-            result = rotateZ.transform(globalV.get(i));
-            globalV.set(i,result);
-        }
+        rotateZ = Matrices.getRotationZ(alpha);
+        Matrices.apply(rotateZ, transformedV);
     }
 
     private void translate(double tx, double ty, double tz) {
-        Point3D result = null;
-        translate = new Affine(1,0,0,tx,
-                0,1, 0,ty,
-                0, 0,1,tz);
-        for(int i = 0; i< globalV.size(); i++){
-            result = translate.transform(globalV.get(i));
-            globalV.set(i,result);
-        }
+        translate = Matrices.getTranslation(tx, ty, tz);
+        Matrices.apply(translate, transformedV);
     }
 
-    public ArrayList<Point3D> getGlobalV() {
-        return globalV;
+    public ArrayList<Point3D> getTransformedV() {
+        return transformedV;
     }
 
     public ArrayList<Point3D> getV() {
         return v;
     }
 
-    public void setGlobalV(ArrayList<Point3D> v) {
-        this.globalV = new ArrayList<Point3D>(v);
+    public void setTransformedV(ArrayList<Point3D> v) {
+        this.transformedV = new ArrayList<Point3D>(v);
         transform();
     }
 

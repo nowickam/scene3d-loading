@@ -43,7 +43,7 @@ public class Cuboid extends Mesh{
         v.add(new Point3D(w,h,0));
         v.add(new Point3D(0,h,0));
 
-        globalV = new ArrayList<>(v);
+        transformedV = new ArrayList<>(v);
         transform();
     }
 
@@ -52,17 +52,17 @@ public class Cuboid extends Mesh{
         tr.clear();
         //side triangles
         for(int i=0;i<4;i++){
-            tr.add(new Triangle(globalV.get(i), globalV.get((i+1)%4), globalV.get((i+1)%4+4)));
-            tr.add(new Triangle(globalV.get(i),  globalV.get((i+1)+3), globalV.get((i+1)%4+4)));
+            tr.add(new Triangle(transformedV.get(i), transformedV.get((i+1)%4), transformedV.get((i+1)%4+4)));
+            tr.add(new Triangle(transformedV.get(i),  transformedV.get((i+1)+3), transformedV.get((i+1)%4+4)));
         }
 
         //upper triangles
-        tr.add(new Triangle(globalV.get(0), globalV.get(1), globalV.get(2)));
-        tr.add(new Triangle(globalV.get(0), globalV.get(3), globalV.get(2)));
+        tr.add(new Triangle(transformedV.get(0), transformedV.get(1), transformedV.get(2)));
+        tr.add(new Triangle(transformedV.get(0), transformedV.get(3), transformedV.get(2)));
 
         //lower triangles
-        tr.add(new Triangle(globalV.get(4), globalV.get(5), globalV.get(6)));
-        tr.add(new Triangle(globalV.get(4), globalV.get(7), globalV.get(6)));
+        tr.add(new Triangle(transformedV.get(4), transformedV.get(5), transformedV.get(6)));
+        tr.add(new Triangle(transformedV.get(4), transformedV.get(7), transformedV.get(6)));
 
     }
 
